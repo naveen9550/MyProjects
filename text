@@ -1,0 +1,65 @@
+import time
+
+class TextAdventureGame:
+    def __init__(self):
+        self.player_inventory = []
+        self.current_story_index = 0
+        self.game_over = False
+
+        self.story = [
+            {"text": "You wake up in a mysterious forest. Paths diverge to the left and right.", "choices": ["Go left", "Go right"]},
+            {"text": "You encounter a friendly merchant. He offers you a magical sword. Do you buy it?", "choices": ["Yes", "No"]},
+            {"text": "A dragon appears! You can fight it with your sword or try to run.", "choices": ["Fight", "Run"]},
+            {"text": "Congratulations! You defeated the dragon and found a hidden treasure.", "choices": []},
+            {"text": "Game Over! The dragon caught you while trying to run.", "choices": []},
+            {"text": "Game Over! You chose not to buy the sword, and the dragon was too powerful.", "choices": []}
+        ]
+
+    def display_story(self):
+        print(self.story[self.current_story_index]["text"])
+        time.sleep(1)
+
+    def get_player_choice(self):
+        choices = self.story[self.current_story_index]["choices"]
+        if choices:
+            print("Choose your action:")
+            for i, choice in enumerate(choices, 1):
+                print(f"{i}. {choice}")
+
+            while True:
+                try:
+                    choice_index = int(input("Enter the number of your choice: "))
+                    if 1 <= choice_index <= len(choices):
+                        return choice_index
+                    else:
+                        print("Invalid choice. Please try again.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+
+    def play_game(self):
+        while not self.game_over:
+            self.display_story()
+            choice = self.get_player_choice()
+
+            # Update game state based on player's choice
+            if self.current_story_index == 1 and choice == 1:
+                self.player_inventory.append("Magical Sword")
+            elif self.current_story_index == 2 and choice == 1:
+                if "Magical Sword" in self.player_inventory:
+                    self.current_story_index = 3  # Player chose to fight and has the sword
+                else:
+                    self.current_story_index = 5  # Player chose to fight without the sword
+            elif self.current_story_index == 2 and choice == 2:
+                self.current_story_index = 4  # Player chose not to buy the sword
+            elif self.current_story_index == 3 and choice == 1:
+                self.current_story_index = 3  # Player chose to fight again
+            elif self.current_story_index == 3 and choice == 2:
+                self.current_story_index = 5  # Player chose to run
+            else:
+                self.game_over = True
+
+        print("Game Over")
+
+if __name__ == "__main__":
+    game = TextAdventureGame()
+    game.play_game()
