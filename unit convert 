@@ -1,0 +1,29 @@
+def celsius_to_fahrenheit(celsius):
+    fahrenheit = (celsius * 9/5) + 32
+    return fahrenheit
+
+def fahrenheit_to_celsius(fahrenheit):
+    celsius = (fahrenheit - 32) * 5/9
+    return celsius
+
+def main():
+    print("Welcome to the Unit Converter - Temperature Edition!")
+    print("Choose conversion:")
+    print("1. Celsius to Fahrenheit")
+    print("2. Fahrenheit to Celsius")
+
+    choice = input("Enter 1 or 2: ")
+
+    if choice == '1':
+        celsius = float(input("Enter temperature in Celsius: "))
+        result = celsius_to_fahrenheit(celsius)
+        print("{} Celsius is equal to {} Fahrenheit.".format(celsius, result))
+    elif choice == '2':
+        fahrenheit = float(input("Enter temperature in Fahrenheit: "))
+        result = fahrenheit_to_celsius(fahrenheit)
+        print("{} Fahrenheit is equal to {} Celsius.".format(fahrenheit, result))
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+
+if __name__ == "__main__":
+    main()
